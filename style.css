@@ -1,0 +1,64 @@
+body{
+background-color: black;
+color: white;
+font-family: monospace;
+font-size: 18px;
+
+text-align:center
+
+}
+
+
+#layout{
+display:table;
+margin: auto;
+height: 600px;
+background-image: url("images/Pattern.jpg");
+border-style: ridge;
+
+}
+p{
+background-color: white;
+color: black;
+
+}
+#menu{
+	width: 200px;
+	float: left;
+	background-color:teal;
+
+	
+}
+.col{
+	color: black;
+	display:table-cell;
+	width: 200px;
+		padding: 5px;
+	}
+.cell{
+	display:block;
+	height: 15%;
+	margin-top: 5%;
+
+	
+}
+.picture{
+height: 150px;
+width: 200px;
+
+}
+.data{
+	background-color:black;
+	color:white;
+	font-family: "Courier New";
+	}
+.button{
+font-size: 20px;
+background-color: green;
+margin: 5%
+
+
+
+}
+
+	

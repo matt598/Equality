@@ -1,0 +1,37 @@
+﻿2 -> 1
+
+(Raw/2)*Happy*Machine = Product
+(Product/2)*Happy*Machine = Wealth
+For 1 Wealth: Rich+=3, Mid+=2, Poor+=1
+Wealth[Rich, Mid, Poor]
+RandomEvent(Chance){
+	// Chooses a city first
+	// Chooses The Result (From Possible Consequences)
+};
+
+Object! Event!
+	Condition
+	Result
+	Message
+
+Government Money
+	>Distribute it
+	>Upgrade Machines
+	>Social Policies
+
+Rich -> Mid -> Poor
+
+Chance (0-1)
+
+Bad:
+Meteor
+Rust Machine down
+Plague happy down
+Riots(Low Happy required) Machines WAAAY Down
+
+
+Good:
+New Innovation! (High Wealth) Machines Up
+
+
+
