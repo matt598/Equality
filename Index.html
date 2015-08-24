@@ -5,12 +5,13 @@
 		<link rel = "stylesheet" href = "style.css">
 		<title>EQUALITY</title>
 		<link rel="icon" type="image/png"href="images/icon.png">
-
+		<script type="text/javascript" src="script.js"></script>
+		
 	</head>
 	<body>
 		
 		<h2 id = "title">Everyone is Made Equal</h2>
-		<h4 class = "data">Current Funds: </h4> 
+		<h4 id = "Funds" class = "data">Current Funds: </h4> 
 		<div id = "layout">
 			<div class = "col" id = "Menu">
 				<p> Menu<p>
@@ -18,9 +19,11 @@
 				</div>
 				<div class = "button" id = "upgradeButton">UPGRADE
 				</div>
-				<div class = "button" id = "taxButton">TAX
+				<div class = "button" id = "taxButton" onclick ="tax()">TAX
 				</div>
-				<div class = "button" id = "policyButton">GRANT
+				<div class = "button" id = "grantButton" onclick ="grant()" >GRANT
+				</div>
+				<div class = "button" id = "passButton" onclick = "passTime(1)">PASS TURN
 				</div>
 			</div>
 			<div class= "col">

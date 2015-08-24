@@ -1,28 +1,30 @@
 //this will be the mechanics for Sam's and mybb
     var chance;
-    var dificulty;
-    var userWealth;
-    var buisness_Sector = {machine:1, wealth:75, resource:0, happy:.375};//neo-toyoko
-    var manufactoring_Sector = {machine:1, wealth:50, resource:0, happy:.25};//CosmoFerguson
+    var difficulty;
+    var userWealth = 100;
+    var business_Sector = {machine:1, wealth:75, resource:0, happy:.375};//neo-toyoko
+    var manufacturing_Sector = {machine:1, wealth:50, resource:0, happy:.25};//CosmoFerguson
     var labor_Sector = {machine:1, wealth:25, resource:0, happy:.125};//Luna-Ohio
+	
+
     
-    primary();
+    //primary();
     var randomEvent = function(chance){
         var eventThatHappens = function(city){}
-        eventThatHappens(Math.floor(3*Math.random()+1)
-    }
+        eventThatHappens(Math.floor(3*Math.random()+1));
+    };
     
     var passTime = function(numberOfTurns){
         labor_Sector.resource+=labor_Sector.happy*labor_Sector.machine*numberOfTurns;
-        manufactoring_Sector.resource+=labor_Sector.resource*manufactoring_Sector.happy*manufactoring_Sector.machine*numberOfTurns/2;
+        manufacturing_Sector.resource+=labor_Sector.resource*manufacturing_Sector.happy*manufacturing_Sector.machine*numberOfTurns/2;
         labor_Sector.resource = 0;
-        buisness_Sector.resource+= manufactoring_Sector.resource*buisness_Sector.happy*buisness_Sector.machine*numberOfTurns/2;
-        manufactoring_Sector.resource = 0;
-        buisness_Sector.wealth += buisness_Sector.resource*3/8;     
-        manufactoring_Sector.wealth += buisness_Sector.resource*2/8;
-        labor_Sector.wealth += buisness_Sector.resource*1/8;
-        userWealth += buisness_Sector.resource*2/8;
-        buisness_Sector.resource =0;//all that stuff above does da resources
+        business_Sector.resource+= manufacturing_Sector.resource*business_Sector.happy*business_Sector.machine*numberOfTurns/2;
+        manufacturing_Sector.resource = 0;
+        business_Sector.wealth += business_Sector.resource*3/8;     
+        manufacturing_Sector.wealth += business_Sector.resource*2/8;
+        labor_Sector.wealth += business_Sector.resource*1/8;
+        userWealth += business_Sector.resource*2/8;
+        business_Sector.resource =0;//all that stuff above does da resources
         //does a randomEvent test for every turn the user advances.
         for(var i = 0; i < numberOfTurns; i++){
             //basically 1 in 4 chance of a random event
@@ -30,90 +32,109 @@
                 randomEvent(chance);
             }
         }
-    }
+		//Display Data on Page
+		show();
+		
+    };
+	
+	function show(){ // Updates Numbers in HTML to those in the program.
+		document.getElementById("Funds").innerHTML = "Current Funds:" + userWealth.toString();
+		
+		document.getElementById("HighWealth").innerHTML = business_Sector.wealth.toString();
+		document.getElementById("HighHappy").innerHTML = business_Sector.happy.toString();
+		document.getElementById("HighMachine").innerHTML = business_Sector.machine.toString();
+		
+		document.getElementById("MidWealth").innerHTML = manufacturing_Sector.wealth.toString();
+		document.getElementById("MidHappy").innerHTML = manufacturing_Sector.happy.toString();
+		document.getElementById("MidMachine").innerHTML = manufacturing_Sector.machine.toString();
+		
+		document.getElementById("LowWealth").innerHTML = labor_Sector.wealth.toString();
+		document.getElementById("LowHappy").innerHTML = labor_Sector.happy.toString();
+		document.getElementById("LowMachine").innerHTML = labor_Sector.machine.toString();
+		};
     
     var moveMonies = function(amount, city){//need to prompt user before hand for city name and amount, in the method call, if it was triggered by the tax method make it negative, if it was taken by the grant button, leave it positive.
-        city = city.substring(0,0);//thinks this will limit it to only the 1st char
+        city = city.toString().substring(0,0);//thinks this will limit it to only the 1st char
         city = city.toUpperCase();
         var limit = 0;
         switch (city){
             case "N":
-            	var initialWealth =buisness_Sector.wealth;
+            	var initialWealth =business_Sector.wealth;
                 if(amount > 0)//giving money
                 {
                 	if(amount < userWealth){
-            		buisness_Sector.wealth +=amount;
+            		business_Sector.wealth +=amount;
                 	}
                 	else{
                 		amount = userWealth;
-                		buisness_Sector.wealth +=amount;
+                		business_Sector.wealth +=amount;
                 	}
                 }
                 else//taking money, based off the assumption no one would waste their time with 0 transactions.
                 {
-                	limit = buisness_Sector.wealth;
+                	limit = business_Sector.wealth;
                 	if(limit < amount){
-                		buisness_Sector.wealth -=limit
+                		business_Sector.wealth -=limit
                 		amount = limit;
                 	}
                 	else{
-                		buisness_Sector.wealth +=limit;
+                		business_Sector.wealth +=limit;
                 	}
                 }
-                if(buisness_Sector.wealth < initialWealth)//they lost monies
+                if(business_Sector.wealth < initialWealth)//they lost monies
                 {
-                	buisness_Sector.happy -= .01 + .5*(1-buisness_Sector.wealth/initialWealth);
-                	if(buisness_Sector.happy < 0)
+                	business_Sector.happy -= .01 + .5*(1-business_Sector.wealth/initialWealth);
+                	if(business_Sector.happy < 0)
                 	{
-                		buisness_Sector.happy = 0;
+                		business_Sector.happy = 0;
                 	}
                 }
                 else//they make monies
                 {
-                	buisness_Sector.happy += .25*(1-initialWealth/buisness_Sector.wealth);
-                	if(buisness_Sector.happy >1)
+                	business_Sector.happy += .25*(1-initialWealth/business_Sector.wealth);
+                	if(business_Sector.happy >1)
                 	{
-                		buisness_Sector.happy = 1;
+                		business_Sector.happy = 1;
                 	}
                 }
             break;
             case "C":
-                var initialWealth =manufactoring_Sector.wealth;
+                var initialWealth =manufacturing_Sector.wealth;
                 if(amount > 0)//giving money
                 {
                 	if(amount < userWealth){
-            		manufactoring_Sector.wealth +=amount;
+            		manufacturing_Sector.wealth +=amount;
                 	}
                 	else{
                 		amount = userWealth;
-                		manufactoring_Sector.wealth +=amount;
+                		manufacturing_Sector.wealth +=amount;
                 	}
                 }
                 else//taking money, based off the assumption no one would waste their time with 0 transactions.
                 {
-                	limit = manufactoring_Sector.wealth;
+                	limit = manufacturing_Sector.wealth;
                 	if(limit < amount){
-                		manufactoring_Sector.wealth -=limit
+                		manufacturing_Sector.wealth -=limit;
                 		amount = limit;
                 	}
                 	else{
-                		manufactoring_Sector.wealth +=limit;
+                		manufacturing_Sector.wealth +=limit;
                 	}
                 }
-                if(manufactoring_Sector.wealth < initialWealth)//they lost monies
+                if(manufacturing_Sector.wealth < initialWealth)//they lost monies
                 {
-                	manufactoring_Sector.happy -= .01 + .5*(1-manufactoring_Sector.wealth/initialWealth);
-                	if(manufactoring_Sector.happy < 0)
+                	manufacturing_Sector.happy -= .01 + .5*(1-manufacturing_Sector.wealth/initialWealth);
+                	if(manufacturing_Sector.happy < 0)
                 	{
-                		manufactoring_Sector.happy = 0;
+                		manufacturing_Sector.happy = 0;
                 	}
                 }
                 else//they make monies
                 {
-                	manufactoring_Sector.happy += .25*(1-initialWealth/manufactoring_Sector.wealth);
-                	if(manufactoring_Sector.happy >1)
+                	manufacturing_Sector.happy += .25*(1-initialWealth/manufacturing_Sector.wealth);
+                	if(manufacturing_Sector.happy >1)
                 	{
-                		manufactoring_Sector.happy = 1;
+                		manufacturing_Sector.happy = 1;
                 	}
                 }
             break;
@@ -159,6 +180,23 @@
             break;
             
             userWealth -=amount;
-        }
-    }
+			}
+        };
+		
+		var grant = function(){
+			var inpCity = prompt("Enter City Name");
+			var inpAmount = prompt("Enter Amount to Give");
+			console.log("GrantRunning");
+			moveMonies(inpAmount, inpCity);
+		};
+		var tax = function(){
+			var inpCity = prompt("Enter City Name");
+			var inpAmount = prompt("Enter Amount to Take");
+			console.log("Tax Running");
+			moveMonies(inpAmount, -1* inpCity);
+		};
+		
+		
+			
+    
     
