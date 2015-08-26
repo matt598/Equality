@@ -1,5 +1,5 @@
 //this will be the mechanics for Sam's and mybb
-    var chance;
+    var chance = .5;
     var difficulty;
 	var week = 0;
     var userWealth = 25;
@@ -11,9 +11,45 @@
 	var statements = "";
     
     //primary();
-    var randomEvent = function(chance){
-        var eventThatHappens = function(city){}
+    var randomEvent = function(){
+        var city = (Math.floor(3*Math.random()));
         eventThatHappens(Math.floor(3*Math.random()+1));
+        console.log("A random event happened")
+        console.log("Event " + eventThatHappens + " happened")
+        switch(eventThatHappens)
+        {
+        	case 1://lose money
+        		country[city].wealth = country[city].wealth * .5*chance;
+        		tellPlayer(country[city].Name + " found out some of their coins were just chocolate wrapped in foil")
+        		chance -=.05;
+        	break;
+        	case 2://gain money
+        		country[city].wealth = country[city].wealth * (1 + .5*(1-chance));
+        		tellPlayer(country[city].Name + " found some extra cash between their couch cushions");
+        	break;
+        	case 3:
+        		country[city].happy = country[city].happy * .5*chance;
+        		tellPlayer(country[city].Name + "'s builboard got hacked and displayed dank memes");
+        	break;
+        	case 4:
+        		country[city].happy = country[city].happy * (1 + .5*(1-chance));
+        		if(country[city].happy > 100)
+        		{
+        			country[city].happy = 100;
+        		}
+        		tellPlayer(country[city].Name + "'s builboard displayed some fresh memes");
+        	break;
+        	case 5:
+        		country[city].machine = country[city].machine * .5*chance;
+        		tellPlayer(country[city].Name + "'s machines rusted some");
+        	break;
+        	case 6:
+        		country[city].machine = country[city].machine * (1 + .5*(1-chance));
+        		tellPlayer(country[city].Name + "'s machines got maintainced.");
+        	break;
+        	default:
+        	break;
+        }
     };
     
 	function tellPlayer(string){
